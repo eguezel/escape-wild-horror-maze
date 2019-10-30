@@ -30,7 +30,7 @@ let showDebug = false;
 
 function preload() {
   // Load tileset for the map
-  this.load.image("tiles", 'src/assets/tilesets/full-tileset.png');
+  this.load.image("tiles", 'src/assets/tilesets/full-tileset.png', 'src/assets/tilesets/full-tileset.json');
   // Load map
   this.load.tilemapTiledJSON("map", 'src/assets/map.json');
   // Load character image
@@ -42,10 +42,15 @@ function create() {
 
   const tileset = map.addTilesetImage('full-tileset', 'tiles');
 
-  const Floor = map.createStaticLayer('Floor', tileset)
-  const Wall = map.createStaticLayer('Wall', tileset);
+  const Floor = map.createStaticLayer('Floor', tileset, 0, 0)
+  const Wall = map.createStaticLayer('Wall', tileset, 0, 0);
 
   Wall.setCollisionByProperty({ collides: true });
+
+  //this.matter.world.convertTilemapLayer(Wall);
+
+  //this.matter.world.setBounds(map.widthInPixels, map.heightInPixels);
+  //this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
   Wall.setDepth(10);
 
@@ -54,7 +59,13 @@ function create() {
   .setSize(30, 40)
   .setOffset(0, 24);
  
+  //player.setBounce(0.2);
+  //player.setCollideWorldBounds(true);
+
   this.physics.add.collider(player, Wall);
+
+  //The holy command
+  map.setCollisionBetween(1, 999, true, 'collisionLayer');
 
   // Create the player's walking animations from the texture atlas. These are stored in the global
   // animation manager so any sprite can access them.
