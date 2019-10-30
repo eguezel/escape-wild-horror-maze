@@ -58,6 +58,8 @@ function create() {
   .sprite(110, 95, "atlas", "misa-front")
   .setSize(30, 40)
   .setOffset(0, 24);
+
+  player.setScale(0.6);
  
   //player.setBounce(0.2);
   //player.setCollideWorldBounds(true);
@@ -66,6 +68,8 @@ function create() {
 
   //The holy command
   map.setCollisionBetween(1, 999, true, 'collisionLayer');
+
+  //Phaser.Physics.Arcade.Body.sourceHeight :number
 
   // Create the player's walking animations from the texture atlas. These are stored in the global
   // animation manager so any sprite can access them.
