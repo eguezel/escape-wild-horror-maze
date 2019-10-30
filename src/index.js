@@ -1,11 +1,19 @@
 import Phaser from "phaser";
-import logoImg from "./assets/logo.png";
 
 const config = {
   type: Phaser.AUTO,
-  parent: "phaser-example",
-  width: 800,
-  height: 600,
+  parent: "game-container",
+  width: 608,
+  height: 544,
+  pixelArt: true, 
+  antialias: false, 
+  autoResize: false,
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { y: 0 }
+    }
+  },
   scene: {
     preload: preload,
     create: create
@@ -14,19 +22,29 @@ const config = {
 
 const game = new Phaser.Game(config);
 
+let cursors;
+let player;
+let showDebug = false;
+
+
 function preload() {
-  this.load.image("logo", logoImg);
+  // Load tileset for the map
+  this.load.image("tiles", 'src/assets/tilesets/full-tileset.png');
+  // Load map
+  this.load.tilemapTiledJSON("map", 'src/assets/map.json');
+  // Load character image
+  this.load.atlas("atlas", 'src/assets/knight_run_spritesheet.png');
 }
 
 function create() {
-  const logo = this.add.image(400, 150, "logo");
+  const map = this.make.tilemap({key: "map"});
 
-  this.tweens.add({
-    targets: logo,
-    y: 450,
-    duration: 2000,
-    ease: "Power2",
-    yoyo: true,
-    loop: -1
-  });
+  const tileset = map.addTilesetImage('full-tileset', 'tiles');
+
+  const Floor = map.createStaticLayer('Floor', tileset)
+  const Wall = map.createStaticLayer('Wall', tileset);
+
+  Wall.setCollisionByProperty({ collides: true });
+
+  Wall.setDepth(10);
 }
