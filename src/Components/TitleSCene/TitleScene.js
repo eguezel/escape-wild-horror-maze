@@ -15,7 +15,10 @@ class TitleScene extends Phaser.Scene {
         let bg = this.add.sprite(0,0,'background');
 		bg.setOrigin(0,0);
 
-        let text = this.add.text(100,100, 'Run for your life!');
+        let text = this.add.text(100,100, 'Click here and run for your life!', {
+            fontSize: 25 + "px",
+            color : "yellow",
+          });
             
 
         text.setInteractive();

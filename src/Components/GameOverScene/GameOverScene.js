@@ -16,10 +16,6 @@ class GameOverScene extends Phaser.Scene {
 
         let text = this.add.text(100,100, 'Retry ? Clik here you fool...', {
           fontSize: 30 + "px",
-          display: "flex",
-          justifyContent: "center",
-          alignItem: "center",
-          align: "center",
           color : "yellow",
         });
             
