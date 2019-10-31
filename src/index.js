@@ -41,6 +41,8 @@ function preload() {
   this.load.atlas("monster", 'src/assets/atlas/monster.png', 'src/assets/atlas/atlas.json');
   // Item
   this.load.image("item", 'src/assets/item.png');
+  // Door
+  this.load.image("door", 'src/assets/door.png');
 }
 
 function create() {
@@ -61,6 +63,14 @@ function create() {
   .setOffset(0, 24);
 
   player.setScale(0.6);
+  // Create door
+
+  let door = this.physics.add
+  .sprite(240, 525, "door");
+  door.setScale(2.25);
+  this.physics.add.overlap(player, door, () => {alert("Vous Avez Gagnez!!!")})
+  this.physics.add.collider(door, Wall);
+
 
   // Create monsters
   let createMonster = (name, x, y) => {
