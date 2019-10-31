@@ -63,11 +63,26 @@ function create() {
   player.setScale(0.6);
 
   // Create monsters
+
+  let lastMonster = '';
+
   let createMonster = (name, x, y) => {
     name = this.physics.add.sprite(x, y, 'monster')
     name.setScale(0.6);
-    this.physics.add.overlap(player, name, () => {life -= 30, console.log(life), name.destroy();});
+    this.physics.add.overlap(player, name, () => {life -= 30, getAName(), name.destroy();});
     this.physics.add.collider(name, Wall);
+  }
+
+  let getAName = () => {
+    fetch('https://hackathon-wild-hackoween.herokuapp.com/monsters')
+    .then(response => response.json())
+    .then(data => {
+      let random = Math.floor(Math.random() * 21);
+      console.log(data.monsters[random].name)
+      lastMonster = data.monsters[random].name;
+      textUp.setText(`Live: ${life}\nLast monster killed: ${data.monsters[random].name}`)
+    })
+    .catch(error => console.error(error))
   }
 
   const monstersPos = [[370, 170], [175, 68], [110, 295], [240, 475], [430, 360], [200, 360], [240, 180]];
@@ -79,7 +94,7 @@ function create() {
   let createItems = (name, x, y) => {
     name = this.physics.add.sprite(x, y, 'item')
     name.setScale(1.75);
-    this.physics.add.overlap(player, name, () => {life += 20, console.log(life), name.destroy();});
+    this.physics.add.overlap(player, name, () => {life += 20, textUp.setText(`Live: ${life}\nLast monster killed: ${lastMonster}`), name.destroy();});
     this.physics.add.collider(name, Wall);
   }
 
@@ -120,9 +135,24 @@ function create() {
     frameRate: 10,
     repeat: -1
   });
+
+  let textUp = this.add
+    .text(0, 0, `Live: ${life}\nLast monster killed: ${lastMonster}`, {
+      font: "18px monospace",
+      fill: "#DA70D6",
+      padding: { x: 20, y: 10 },
+      backgroundColor: "rgba(0, 0, 0, 0.6)"
+    })
+    .setScrollFactor(0)
+    .setDepth(30);
 }
 
-function update(time, delta) {
+  //Update Text
+  /*let updateText = () => {
+    textUp.setText(`Live: ${life}\nLast monster killed: ${lastMonster}`);
+  }*/
+
+function update() {
   const speed = 100;
   cursors = this.input.keyboard.createCursorKeys();
 
