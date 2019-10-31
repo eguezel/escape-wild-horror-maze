@@ -64,6 +64,7 @@ class GameScene extends Phaser.Scene {
         door.setScale(2.25);
         this.physics.add.overlap(player, door, () => {winSound.play(), mainMusic.stop(), console.log("Vous Avez Gagnez!!!")})
         this.physics.add.collider(door, Wall);
+	door.setImmovable(true);
       
         // Create monsters
       
@@ -74,6 +75,27 @@ class GameScene extends Phaser.Scene {
           name.setScale(0.6);
           this.physics.add.overlap(player, name, () => {life -= 30, getAName(), punchSound.play(), name.destroy();});
           this.physics.add.collider(name, Wall);
+	  this.physics.add.collider(name, door);
+	  let randNumber;
+	  setInterval(() => {
+	    randNumber = Math.floor((Math.random() * 4) + 1);
+	    switch(randNumber) {
+	      case 1:
+	        name.body.setVelocityX(50);
+	        break;
+	      case 2:
+	        name.body.setVelocityX(-50);
+	        break;
+	      case 3:
+	        name.body.setVelocityY(50);
+	        break;
+	      case 4:
+	        name.body.setVelocityY(50);
+	        break;
+	      default:
+	        name.body.setVelocityX(50);
+	    }
+	  }, 500);
         }
       
         let getAName = () => {
