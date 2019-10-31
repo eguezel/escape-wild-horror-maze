@@ -28,8 +28,11 @@ class GameOverScene extends Phaser.Scene {
         }, this);
         
         
-	}
+    }
+    
+    update() {
 
+	}
 
 }
 

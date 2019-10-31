@@ -8,7 +8,8 @@ let showDebug = false;
 class GameScene extends Phaser.Scene {
 
 	constructor() {
-		super({key : 'gameScene'});
+        super({key : 'gameScene'});
+        console.log("game sene start")
 	}
 
 	 preload() {
@@ -191,7 +192,8 @@ class GameScene extends Phaser.Scene {
       
         //Game Over
         if (life <= 0) {
-            this.scene.start('gameOverScene');
+            this.scene.switch('gameOverScene');
+            life =100;
         }
       }
 }
