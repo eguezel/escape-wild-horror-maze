@@ -1,3 +1,4 @@
+import { Z_FIXED } from "zlib";
 
 class TitleScene extends Phaser.Scene {
 

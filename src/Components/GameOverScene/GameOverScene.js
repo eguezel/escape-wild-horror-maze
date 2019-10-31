@@ -14,7 +14,14 @@ class GameOverScene extends Phaser.Scene {
         let bg = this.add.sprite(0,0,'gameOver');
 		bg.setOrigin(0,0);
 
-        let text = this.add.text(100,100, 'Retry ?');
+        let text = this.add.text(100,100, 'Retry ? Clik here you fool...', {
+          fontSize: 30 + "px",
+          display: "flex",
+          justifyContent: "center",
+          alignItem: "center",
+          align: "center",
+          color : "yellow",
+        });
             
 
         text.setInteractive();
@@ -28,6 +35,8 @@ class GameOverScene extends Phaser.Scene {
 	}
 
 	update() {
+
+        
 
 	}
 
