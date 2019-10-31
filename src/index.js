@@ -37,5 +37,5 @@ game.scene.add("gameScene", gameScene);
 game.scene.add('gameOverScene', gameOverScene);
 game.scene.add("victoryScene", victoryScene);
 
-game.scene.start('titleScene');
+game.scene.start('victoryScene');
 
