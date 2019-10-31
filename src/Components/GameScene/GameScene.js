@@ -191,7 +191,7 @@ class GameScene extends Phaser.Scene {
       
         //Game Over
         if (life <= 0) {
-          alert('Game Over !');
+            this.scene.start('gameOverScene');
         }
       }
 }

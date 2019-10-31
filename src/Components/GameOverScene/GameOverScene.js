@@ -30,12 +30,6 @@ class GameOverScene extends Phaser.Scene {
         
 	}
 
-	update() {
-
-        
-
-	}
-
 
 }
 
