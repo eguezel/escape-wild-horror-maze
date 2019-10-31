@@ -25,6 +25,8 @@ const game = new Phaser.Game(config);
 
 let cursors;
 let player;
+let item;
+let life = 100;
 let showDebug = false;
 
 
@@ -35,6 +37,10 @@ function preload() {
   this.load.tilemapTiledJSON("map", 'src/assets/map.json');
   // Load character image
   this.load.atlas("atlas", 'src/assets/atlas/atlas.png', 'src/assets/atlas/atlas.json');
+  // Load monster image
+  this.load.atlas("monster", 'src/assets/atlas/monster.png', 'src/assets/atlas/atlas.json');
+  // Item
+  this.load.image("item", 'src/assets/item.png');
 }
 
 function create() {
@@ -47,11 +53,6 @@ function create() {
 
   Wall.setCollisionByProperty({ collides: true });
 
-  //this.matter.world.convertTilemapLayer(Wall);
-
-  //this.matter.world.setBounds(map.widthInPixels, map.heightInPixels);
-  //this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
   Wall.setDepth(10);
 
   player = this.physics.add
@@ -60,16 +61,37 @@ function create() {
   .setOffset(0, 24);
 
   player.setScale(0.6);
- 
-  //player.setBounce(0.2);
-  //player.setCollideWorldBounds(true);
+
+  // Create monsters
+  let createMonster = (name, x, y) => {
+    name = this.physics.add.sprite(x, y, 'monster')
+    name.setScale(0.6);
+    this.physics.add.overlap(player, name, () => {life -= 30, console.log(life), name.destroy();});
+    this.physics.add.collider(name, Wall);
+  }
+
+  const monstersPos = [[370, 170], [175, 68], [110, 295], [240, 475], [430, 360], [200, 360], [240, 180]];
+  for (let i = 0; i < 7; i++) {
+    createMonster(`monster${i}`, monstersPos[i][0], monstersPos[i][1]);
+  }
+
+  // Create items/potions
+  let createItems = (name, x, y) => {
+    name = this.physics.add.sprite(x, y, 'item')
+    name.setScale(1.75);
+    this.physics.add.overlap(player, name, () => {life += 20, console.log(life), name.destroy();});
+    this.physics.add.collider(name, Wall);
+  }
+
+  const itemsPos = [[310, 115], [560, 170], [175, 235], [410, 495]];
+  for (let i = 0; i < 4; i++) {
+    createItems(`item${i}`, itemsPos[i][0], itemsPos[i][1]);
+  }
 
   this.physics.add.collider(player, Wall);
 
   //The holy command
   map.setCollisionBetween(1, 999, true, 'collisionLayer');
-
-  //Phaser.Physics.Arcade.Body.sourceHeight :number
 
   // Create the player's walking animations from the texture atlas. These are stored in the global
   // animation manager so any sprite can access them.
