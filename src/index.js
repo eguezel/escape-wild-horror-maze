@@ -41,6 +41,11 @@ function preload() {
   this.load.atlas("monster", 'src/assets/atlas/monster.png', 'src/assets/atlas/atlas.json');
   // Item
   this.load.image("item", 'src/assets/item.png');
+  // Music and sounds
+  this.load.audio("main", 'src/assets/sounds/main.mp3');
+  this.load.audio("punch", 'src/assets/sounds/punch.mp3');
+  this.load.audio("drink", 'src/assets/sounds/drink.mp3');
+  this.load.audio("win", 'src/assets/sounds/win.mp3');
 }
 
 function create() {
@@ -54,6 +59,14 @@ function create() {
   Wall.setCollisionByProperty({ collides: true });
 
   Wall.setDepth(10);
+
+  // Create sounds
+  let mainMusic = this.sound.add("main");
+  let punchSound = this.sound.add("punch");
+  let drinkSound = this.sound.add("drink");
+  let winSound = this.sound.add("win");
+
+  mainMusic.play();
 
   player = this.physics.add
   .sprite(110, 95, "atlas", "misa-front")
@@ -69,7 +82,7 @@ function create() {
   let createMonster = (name, x, y) => {
     name = this.physics.add.sprite(x, y, 'monster')
     name.setScale(0.6);
-    this.physics.add.overlap(player, name, () => {life -= 30, getAName(), name.destroy();});
+    this.physics.add.overlap(player, name, () => {life -= 30, getAName(), punchSound.play(), name.destroy();});
     this.physics.add.collider(name, Wall);
   }
 
@@ -94,7 +107,7 @@ function create() {
   let createItems = (name, x, y) => {
     name = this.physics.add.sprite(x, y, 'item')
     name.setScale(1.75);
-    this.physics.add.overlap(player, name, () => {life += 20, textUp.setText(`Live: ${life}\nLast monster killed: ${lastMonster}`), name.destroy();});
+    this.physics.add.overlap(player, name, () => {life += 20, drinkSound.play(), textUp.setText(`Live: ${life}\nLast monster killed: ${lastMonster}`), name.destroy();});
     this.physics.add.collider(name, Wall);
   }
 
