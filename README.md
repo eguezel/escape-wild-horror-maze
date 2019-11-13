@@ -2,6 +2,8 @@
 
 It's a funny game made by a team of 3 members for a Hackaton.
 
+![Game](https://zupimages.net/up/19/45/8e4b.png)
+
 ## Phaser 3 Webpack Project Template
 
 A Phaser 3 project template with ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 4](https://webpack.js.org/)
