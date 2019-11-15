@@ -8,7 +8,8 @@ let showDebug = false;
 class GameScene extends Phaser.Scene {
 
 	constructor() {
-		super({key : 'gameScene'});
+        super({key : 'gameScene'});
+        console.log("game sene start")
 	}
 
 	 preload() {
@@ -62,7 +63,7 @@ class GameScene extends Phaser.Scene {
         let door = this.physics.add
         .sprite(240, 525, "door");
         door.setScale(2.25);
-        this.physics.add.overlap(player, door, () => {winSound.play(), mainMusic.stop(), console.log("Vous Avez Gagnez!!!")})
+        this.physics.add.overlap(player, door, () => {winSound.play(), mainMusic.stop(), this.scene.start('victoryScene')})
         this.physics.add.collider(door, Wall);
 	      door.setImmovable(true);
       
@@ -213,7 +214,8 @@ class GameScene extends Phaser.Scene {
       
         //Game Over
         if (life <= 0) {
-          alert('Game Over !');
+            this.scene.start('gameOverScene');
+            life =100;
         }
       }
 }
