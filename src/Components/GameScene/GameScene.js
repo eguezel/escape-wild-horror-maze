@@ -64,7 +64,7 @@ class GameScene extends Phaser.Scene {
         door.setScale(2.25);
         this.physics.add.overlap(player, door, () => {winSound.play(), mainMusic.stop(), console.log("Vous Avez Gagnez!!!")})
         this.physics.add.collider(door, Wall);
-	door.setImmovable(true);
+	      door.setImmovable(true);
       
         // Create monsters
       
